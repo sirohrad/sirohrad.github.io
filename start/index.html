@@ -70,9 +70,9 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
 
 <script>
 // Посилання на папку Google Drive кожного уроку (доступ «усі, хто має посилання → читач»).
-// Картка учня веде на цю сторінку з #l1 … #l5 — дитина бачить лише трейлер свого класу.
-const LESSONS = { l1: "", l2: "", l3: "", l4: "", l5: "" };
-const LESSON = (location.hash.match(/^#(l[1-5])$/) || [])[1] || null;
+// Картка учня веде на цю сторінку з #l1 … #l7 — дитина бачить лише трейлер свого класу.
+const LESSONS = { l1: "", l2: "", l3: "", l4: "", l5: "", l6: "", l7: "" };
+const LESSON = (location.hash.match(/^#(l[1-7])$/) || [])[1] || null;
 const CODES = ["СТАРТ","АВТОР"];
 const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У"};
 const norm = s => s.toUpperCase().replace(/\s+/g,"").replace(/[A-Z]/g,c=>LAT[c]||c);
