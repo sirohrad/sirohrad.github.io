@@ -71,7 +71,15 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
 <script>
 // Посилання на папку Google Drive кожного уроку (доступ «усі, хто має посилання → читач»).
 // Картка учня веде на цю сторінку з #l1 … #l7 — дитина бачить лише трейлер свого класу.
-const LESSONS = { l1: "", l2: "", l3: "", l4: "", l5: "", l6: "", l7: "" };
+const LESSONS = {
+  l1: "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing",
+  l2: "https://drive.google.com/drive/folders/1RVwfx3khV7wnY8LdPW57MGolIueyCQyD?usp=sharing",
+  l3: "https://drive.google.com/drive/folders/1JcxpMOPJIRr5lkVEH_CSX8IuRbFrEMAD?usp=sharing",
+  l4: "https://drive.google.com/drive/folders/16P57RkOrGdzNZ0Il18YgHuVGgep9Zymj?usp=sharing",
+  l5: "https://drive.google.com/drive/folders/1xPL7lufFBSPjr6wSuidbJE5fy358JETN?usp=sharing",
+  l6: "https://drive.google.com/drive/folders/1Zc21xgJPCcgy2oocUb4-jerfKCYVBj_I?usp=sharing",
+  l7: "https://drive.google.com/drive/folders/1q0f_4aZd60jJnJtmje5hq95F3lhheQKl?usp=sharing"
+};
 const LESSON = (location.hash.match(/^#(l[1-7])$/) || [])[1] || null;
 const CODES = ["СТАРТ","АВТОР"];
 const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У"};
