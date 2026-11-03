@@ -73,7 +73,8 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
 // Картка учня веде на цю сторінку з #l1 … #l7 — дитина бачить лише трейлер свого класу.
 const LESSONS = {
   l1: "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing",
-  l2: "https://drive.google.com/drive/folders/1RVwfx3khV7wnY8LdPW57MGolIueyCQyD?usp=sharing",
+  // Набір «Урок 2» роздано і 9-В, і 10 класу: папку вибирає код.
+  l2: { "СТАРТ": "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing", "АВТОР": "https://drive.google.com/drive/folders/1RVwfx3khV7wnY8LdPW57MGolIueyCQyD?usp=sharing" },
   l3: "https://drive.google.com/drive/folders/1JcxpMOPJIRr5lkVEH_CSX8IuRbFrEMAD?usp=sharing",
   l4: "https://drive.google.com/drive/folders/16P57RkOrGdzNZ0Il18YgHuVGgep9Zymj?usp=sharing",
   l5: "https://drive.google.com/drive/folders/1xPL7lufFBSPjr6wSuidbJE5fy358JETN?usp=sharing",
@@ -103,7 +104,8 @@ $("f").addEventListener("submit", e => {
   drawSlots(hit);
   $("status").textContent = "SYS://LAUNCH · ДОСТУП ВІДКРИТО"; $("status").className = "lab a";
   $("panel").classList.add("ok"); $("lock").hidden = true; $("open").hidden = false;
-  const url = LESSON ? LESSONS[LESSON] : "";
+  const entry = LESSON ? LESSONS[LESSON] : "";
+  const url = typeof entry === "object" ? (entry[hit] || "") : entry;
   if (url) { $("watch").href = url; $("watch").hidden = false; } else { $("wait").hidden = false; }
 });
 </script>
