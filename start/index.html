@@ -59,9 +59,9 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="lab a">ACHIEVEMENT UNLOCKED · ГРУ ЗАПУЩЕНО</div>
       <h1>Ти автор цього світу</h1>
-      <a class="btn" id="watch" href="#" target="_blank" rel="noopener" hidden>Дивитись роботи класу</a>
-      <p class="note" id="wait" hidden>Роботи твого класу ще завантажуються. Зазирни сюди ввечері, після уроку.</p>
-      <p class="note">Покажи батькам: тут твій герой і твій світ.</p>
+      <a class="btn" id="watch" href="#" target="_blank" rel="noopener" hidden>Дивитись трейлер класу</a>
+      <p class="note" id="wait" hidden>Трейлер твого класу ще рендериться. Зазирни сюди ввечері, після уроку.</p>
+      <p class="note">Покажи трейлер батькам: тут твій герой і твій світ.</p>
     </div>
   </section>
 
@@ -80,7 +80,7 @@ const $ = id => document.getElementById(id);
 
 function drawSlots(word){ $("slots").innerHTML = [...Array(5)].map((_,i)=>{const ch=word?word[i]:"?";return `<div class="slot ${word?"on":""}">${ch}</div>`}).join(""); }
 drawSlots(null);
-if (!LESSON) { $("msg").textContent = "Відскануй QR зі своєї картки SIROHRAD, щоб відкрити роботи свого класу."; }
+if (!LESSON) { $("msg").textContent = "Відскануй QR зі своєї картки SIROHRAD, щоб відкрити трейлер свого класу."; }
 
 $("f").addEventListener("submit", e => {
   e.preventDefault();
