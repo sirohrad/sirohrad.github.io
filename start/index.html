@@ -69,20 +69,18 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
 </main>
 
 <script>
-// Посилання на папку Google Drive кожного уроку (доступ «усі, хто має посилання → читач»).
-// Картка учня веде на цю сторінку з #l1 … #l7 — дитина бачить лише трейлер свого класу.
+// Кожен набір карток (#l1…#l7) має свій код класу → своя папка Drive.
+// Коди з букв, які однаково пишуться кирилицею й латиницею (працює на будь-якій клавіатурі).
 const LESSONS = {
-  l1: "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing",
-  // Набір «Урок 2» роздано і 9-В, і 10 класу: папку вибирає код.
-  l2: { "СТАРТ": "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing", "АВТОР": "https://drive.google.com/drive/folders/1RVwfx3khV7wnY8LdPW57MGolIueyCQyD?usp=sharing" },
-  l3: "https://drive.google.com/drive/folders/1JcxpMOPJIRr5lkVEH_CSX8IuRbFrEMAD?usp=sharing",
-  l4: "https://drive.google.com/drive/folders/16P57RkOrGdzNZ0Il18YgHuVGgep9Zymj?usp=sharing",
-  l5: "https://drive.google.com/drive/folders/1xPL7lufFBSPjr6wSuidbJE5fy358JETN?usp=sharing",
-  l6: "https://drive.google.com/drive/folders/1Zc21xgJPCcgy2oocUb4-jerfKCYVBj_I?usp=sharing",
-  l7: "https://drive.google.com/drive/folders/1q0f_4aZd60jJnJtmje5hq95F3lhheQKl?usp=sharing"
+  l1: { "СТАРТ": "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing" },                       // 9-В
+  l2: { "СТАРТ": "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing", "АВТОР": "https://drive.google.com/drive/folders/1RVwfx3khV7wnY8LdPW57MGolIueyCQyD?usp=sharing" },      // набір роздано 9-В і 10 класу
+  l3: { "ХРОМА": "https://drive.google.com/drive/folders/1JcxpMOPJIRr5lkVEH_CSX8IuRbFrEMAD?usp=sharing" },                       // 8-А
+  l4: { "КАРТА": "https://drive.google.com/drive/folders/16P57RkOrGdzNZ0Il18YgHuVGgep9Zymj?usp=sharing" },                       // 9-Б
+  l5: { "МАКЕТ": "https://drive.google.com/drive/folders/1xPL7lufFBSPjr6wSuidbJE5fy358JETN?usp=sharing" },                       // 8-Б
+  l6: { "ВАРТА": "https://drive.google.com/drive/folders/1Zc21xgJPCcgy2oocUb4-jerfKCYVBj_I?usp=sharing" },                       // 8-В
+  l7: { "ЕКРАН": "https://drive.google.com/drive/folders/1q0f_4aZd60jJnJtmje5hq95F3lhheQKl?usp=sharing" }                        // 9-А
 };
 const LESSON = (location.hash.match(/^#(l[1-7])$/) || [])[1] || null;
-const CODES = ["СТАРТ","АВТОР"];
 const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У"};
 const norm = s => s.toUpperCase().replace(/\s+/g,"").replace(/[A-Z]/g,c=>LAT[c]||c);
 const $ = id => document.getElementById(id);
@@ -94,7 +92,7 @@ if (!LESSON) { $("msg").textContent = "Відскануй QR зі своєї к�
 $("f").addEventListener("submit", e => {
   e.preventDefault();
   const v = norm($("code").value);
-  const hit = CODES.find(c => c === v);
+  const hit = LESSON && LESSONS[LESSON][v] !== undefined ? v : null;
   if (!hit) {
     $("msg").textContent = v.length < 5 ? "У коді 5 букв. Спитай у команди." : "ACCESS DENIED · Код не підходить. Спробуй ще раз.";
     $("msg").className = "msg err";
@@ -104,8 +102,7 @@ $("f").addEventListener("submit", e => {
   drawSlots(hit);
   $("status").textContent = "SYS://LAUNCH · ДОСТУП ВІДКРИТО"; $("status").className = "lab a";
   $("panel").classList.add("ok"); $("lock").hidden = true; $("open").hidden = false;
-  const entry = LESSON ? LESSONS[LESSON] : "";
-  const url = typeof entry === "object" ? (entry[hit] || "") : entry;
+  const url = LESSONS[LESSON][hit];
   if (url) { $("watch").href = url; $("watch").hidden = false; } else { $("wait").hidden = false; }
 });
 </script>
