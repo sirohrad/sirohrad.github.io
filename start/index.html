@@ -59,9 +59,9 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="lab a">ACHIEVEMENT UNLOCKED · ГРУ ЗАПУЩЕНО</div>
       <h1>Ти автор цього світу</h1>
-      <a class="btn" id="watch" href="#" target="_blank" rel="noopener" hidden>Дивитись трейлер класу</a>
-      <p class="note" id="wait" hidden>Трейлер твого класу ще рендериться. Зазирни сюди ввечері, після уроку.</p>
-      <p class="note">Покажи трейлер батькам: тут твій герой і твій світ.</p>
+      <a class="btn" id="watch" href="#" target="_blank" rel="noopener" hidden>Відкрити роботи класу</a>
+      <p class="note" id="wait" hidden>Роботи твого класу ще завантажуються. Зазирни сюди ввечері, після уроку.</p>
+      <p class="note">Покажи батькам свої картинки й відео: тут твій герой і твій світ.</p>
     </div>
   </section>
 
@@ -81,7 +81,8 @@ const LESSONS = {
   l7: { "ЕКРАН": "https://drive.google.com/drive/folders/1q0f_4aZd60jJnJtmje5hq95F3lhheQKl?usp=sharing" }                        // 9-А
 };
 const CODES = Object.assign({}, ...Object.values(LESSONS)); // усі коди всіх наборів
-const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У"};
+const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У",R:"Р",V:"В",N:"Н"}; // + як чути латиницею: KARTA, VARTA, EKRAN
+const ALIAS = {"НРОМА":"ХРОМА"}; // HROMA
 const norm = s => s.toUpperCase().replace(/\s+/g,"").replace(/[A-Z]/g,c=>LAT[c]||c);
 const $ = id => document.getElementById(id);
 
@@ -90,7 +91,7 @@ drawSlots(null);
 
 $("f").addEventListener("submit", e => {
   e.preventDefault();
-  const v = norm($("code").value);
+  const v0 = norm($("code").value), v = ALIAS[v0] || v0;
   const hit = CODES[v] !== undefined ? v : null;
   if (!hit) {
     $("msg").textContent = v.length < 5 ? "У коді 5 букв. Спитай у команди." : "ACCESS DENIED · Код не підходить. Спробуй ще раз.";
