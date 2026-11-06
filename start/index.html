@@ -69,7 +69,7 @@ h1{font-family:var(--display);font-size:clamp(26px,7vw,34px);line-height:1.1;mar
 </main>
 
 <script>
-// Кожен набір карток (#l1…#l7) має свій код класу → своя папка Drive.
+// Код класу → папка Drive цього класу. Код сам визначає клас, тож підходить QR з будь-якої картки (#l1…#l7 або без нього).
 // Коди з букв, які однаково пишуться кирилицею й латиницею (працює на будь-якій клавіатурі).
 const LESSONS = {
   l1: { "СТАРТ": "https://drive.google.com/drive/folders/1loX4zYzWgd9jBugSTtVtOJnvPPS1uQ3o?usp=sharing" },                       // 9-В
@@ -80,19 +80,18 @@ const LESSONS = {
   l6: { "ВАРТА": "https://drive.google.com/drive/folders/1Zc21xgJPCcgy2oocUb4-jerfKCYVBj_I?usp=sharing" },                       // 8-В
   l7: { "ЕКРАН": "https://drive.google.com/drive/folders/1q0f_4aZd60jJnJtmje5hq95F3lhheQKl?usp=sharing" }                        // 9-А
 };
-const LESSON = (location.hash.match(/^#(l[1-7])$/) || [])[1] || null;
+const CODES = Object.assign({}, ...Object.values(LESSONS)); // усі коди всіх наборів
 const LAT = {A:"А",B:"В",C:"С",E:"Е",H:"Н",K:"К",M:"М",O:"О",P:"Р",T:"Т",X:"Х",Y:"У"};
 const norm = s => s.toUpperCase().replace(/\s+/g,"").replace(/[A-Z]/g,c=>LAT[c]||c);
 const $ = id => document.getElementById(id);
 
 function drawSlots(word){ $("slots").innerHTML = [...Array(5)].map((_,i)=>{const ch=word?word[i]:"?";return `<div class="slot ${word?"on":""}">${ch}</div>`}).join(""); }
 drawSlots(null);
-if (!LESSON) { $("msg").textContent = "Відскануй QR зі своєї картки SIROHRAD, щоб відкрити трейлер свого класу."; }
 
 $("f").addEventListener("submit", e => {
   e.preventDefault();
   const v = norm($("code").value);
-  const hit = LESSON && LESSONS[LESSON][v] !== undefined ? v : null;
+  const hit = CODES[v] !== undefined ? v : null;
   if (!hit) {
     $("msg").textContent = v.length < 5 ? "У коді 5 букв. Спитай у команди." : "ACCESS DENIED · Код не підходить. Спробуй ще раз.";
     $("msg").className = "msg err";
@@ -100,9 +99,10 @@ $("f").addEventListener("submit", e => {
     return;
   }
   drawSlots(hit);
+  $("msg").textContent = ""; $("msg").className = "msg";
   $("status").textContent = "SYS://LAUNCH · ДОСТУП ВІДКРИТО"; $("status").className = "lab a";
   $("panel").classList.add("ok"); $("lock").hidden = true; $("open").hidden = false;
-  const url = LESSONS[LESSON][hit];
+  const url = CODES[hit];
   if (url) { $("watch").href = url; $("watch").hidden = false; } else { $("wait").hidden = false; }
 });
 </script>
